@@ -1,3 +1,15 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+# evaluate.py
+# Read the database rc, convert reason and tuple into a .tsv file which is easy imported into Excel
+#
+# Author: Xing Shi
+# contact: xingshi@usc.edu
+# 
+# before running, you should change main():dir to your output dir path.
+
+
 import mydb
 import json
 import rcreplace
@@ -21,11 +33,14 @@ def tuple2str(phrase):
     s += toString(phrase['iobj'])
     return s
 
+
 def main():
     offset = 0
-    pfile = open('evaluate/evaluate.pairs.'+str(offset)+'.txt','w')
-    tfile = open('evaluate/evaluate.tuples.'+str(offset)+'.txt','w')
-    cfile = open('evaluate/evaluate.corefs.'+str(offset)+'.txt','w')
+    # change your output dir
+    dir = 'evaluate'
+    pfile = open(dir + '/evaluate.pairs.' + str(offset) + '.txt','w')
+    tfile = open(dir + '/evaluate.tuples.'+ str(offset) + '.txt','w')
+    cfile = open(dir + '/evaluate.corefs.'+ str(offset) + '.txt','w')
     
     CONN_STRING = mydb.get_CONN('wiki')
     con = mydb.getCon(CONN_STRING)

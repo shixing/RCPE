@@ -1,3 +1,15 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+# preprocess.py
+# Insert json file into database:
+#   review.json.txt: python preprocess.py -u xingshi -i -f ./yelp/yelp_review.json
+# Do the Discourse Segmenting
+#   python preprocess.py -u xingshi -s 0 -e 1000 -f sent.txt -d ../../dp/SPADE/bin
+#
+# Author: Ai He & Xing Shi
+# contact: aihe@usc.edu xingshi@usc.edu
+
 import mydb
 import json
 from pprint import pprint

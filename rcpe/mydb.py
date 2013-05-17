@@ -1,14 +1,26 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# mydb.py
+# Provide some common database tasks inferences.
+#
+# Author: Xing Shi
+# contact: xingshi@usc.edu
+# 
+# see demo() for help
+
 import psycopg2
 import sys
 
 def get_CONN(username):
+    # for linux
     if username == 'xingshi':
         return "host='localhost' dbname='yelp' user='xingshi' password='xingshi'"
     else:
+        # for mac
         return "host='localhost' dbname='yelp' user='wiki' password='wiki'"
+
+
 def getCon(CONN_STRING):
     try:
         con = psycopg2.connect(CONN_STRING)
@@ -17,11 +29,13 @@ def getCon(CONN_STRING):
     except psycopg2.DatabaseError, e:
         print 'Error %s' % e
         sys.exit(-1)
+
     
 def closeCon(con):
     if con:
         con.close()
      
+
 def executeManyQuery(con,querys,debug):
     try:
         cur = con.cursor()
@@ -34,6 +48,7 @@ def executeManyQuery(con,querys,debug):
         print 'Error %s' % e
         sys.exit(-1)
 
+
 def executeQuery(con,query,debug):
     try:
         cur = con.cursor()
@@ -44,6 +59,7 @@ def executeQuery(con,query,debug):
     except psycopg2.DatabaseError, e:
         print 'Error %s' % e
         sys.exit(-1)
+
 
 def executeQueryRecords(con,query,records,debug):
     try:
@@ -56,6 +72,7 @@ def executeQueryRecords(con,query,records,debug):
         print 'Error %s' % e
         sys.exit(-1)
 
+
 def executeQueryResult(con,query,debug):
     try:
         cur = con.cursor()
@@ -67,3 +84,10 @@ def executeQueryResult(con,query,debug):
     except psycopg2.DatabaseError, e:
         print 'Error %s' % e
         sys.exit(-1)
+
+
+def demo():
+    CONN_STRING = get_CONN('wiki')
+    con = getCon(CONN_STRING)
+    # performe other tasks
+    # ...
