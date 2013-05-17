@@ -7,9 +7,9 @@
 # contains creating table, inserting entries and clearing table
 #
 # Usage: python getConse.py -u user [-c doCreate, -i doInsert, -d doClear] -d dir
-# user specifies the username of DB
+# user - the username of DB
 # default values of c, i and d is false
-# dir is the input dir which contains coref files
+# dir - the input dir which contains coref files
 #
 # Author: Ai He
 # contact: aihe@usc.edu

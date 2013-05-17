@@ -3,14 +3,14 @@
 
 # getReas.py
 #
-# to get reasons from file and then generate a reason file for each ID
+# to get reasons from file and then write them into a file for each ID
 # these files can be used in clustering
-# one line in file is like 
-#{"sen_pairs": [[[["because I 've heard so many good things about this place . ", 36]], [["It 's odd , ", 35]]]], "id": 54235}
+# format of input file:
+# {"sen_pairs": [[[["because I 've heard so many good things about this place . ", 36]], [["It 's odd , ", 35]]]], "id": 54235}
 #
-# usage: python getConse.py -f file -d yourDir
-# file is the path to input file
-# yourDir specifies where to put these files
+# usage: python getConse.py -f file -d dir
+# file - the path to input file
+# dir - where to put these files
 #
 # Author: Ai He
 # contact: aihe@usc.edu
