@@ -1,15 +1,35 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+# getReas.py
+#
+# to get reasons from file and then generate a reason file for each ID
+# these files can be used in clustering
+# one line in file is like 
+#{"sen_pairs": [[[["because I 've heard so many good things about this place . ", 36]], [["It 's odd , ", 35]]]], "id": 54235}
+#
+# usage: python getConse.py -f file -d yourDir
+# file is the path to input file
+# yourDir specifies where to put these files
+#
+# Author: Ai He
+# contact: aihe@usc.edu
+
+
 import json
+
 
 def getReas(j):
     iden = str(j['id'])
     rcs = j['sen_pairs']
     reasons = []
+    
+    # rcs is reasons & consequences pair
     for rc in rcs:
-        #print rc
+		# to get reasons
         rs = rc[0]
-        #print cs
         if len(rs) > 1:
-            print iden
+            #print iden
         for r in rs:
             rMap = {}
             #print iden, c
@@ -18,11 +38,21 @@ def getReas(j):
             reasons.append(rMap)
     return reasons
 
+
 if __name__ == '__main__':
-    dir = 'content_rea/rea/raw/'
+    #dir = 'content_rea/rea/raw/'
+    from optparse import OptionParser
+    usage="usage: %prog [options]"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-f","--file",dest='file',help="input file name")
+    parser.add_option("-d","--dir",dest='dir',help="objectice directory")
+    (options,args) = parser.parse_args()
+    dir = options.dir
+    file = options.file
+    
     import os
-    json_data = open('result.sentence.json.txt')
-    #f = open('cons.sentence.json.txt', 'w')
+    #json_data = open('result.sentence.json.txt')
+    json_data = open(file)
     for rc in json_data:
         reasons = getReas(json.loads(rc))
         for rMap in reasons:
