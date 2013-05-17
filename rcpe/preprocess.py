@@ -136,7 +136,6 @@ def processSingle(start, end, fileName,dirName,p):
    
     con.close()
 
-#deprecated
 def processBatch(p):
     totalOneTime = 300#increment each time
     con = mydb.getCon(CONN_STRING)
