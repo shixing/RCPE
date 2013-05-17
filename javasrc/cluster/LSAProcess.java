@@ -17,9 +17,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
 import javax.sound.midi.SysexMessage;
-
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.shingle.ShingleAnalyzerWrapper;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -32,7 +30,6 @@ import org.apache.lucene.util.Version;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-
 import pitt.search.lucene.FilePositionDoc;
 import pitt.search.lucene.IndexFilePositions;
 import pitt.search.lucene.PorterAnalyzer;
@@ -67,37 +64,6 @@ public class LSAProcess {
 	}
 
  	void lsa() throws IllegalArgumentException, IOException {
-//		String cmd = "-luceneindexpath index/Abby_Watkins/positional_index/ -minfrequency 2 "
-//				+ "-termweight idf -porterstemmer true";
-//		String[] args = cmd.split("\\s+");
-//		String[] filesToBuild = new String[] { "docvectors.bin" };
-//		for (String fn : filesToBuild) {
-//			if (new File(fn).isFile()) {
-//				new File(fn).delete();
-//			}
-//		}
-//		// String message = LSA.usageMessage;
-//		LSA.main(args);
-//		// for (String fn: filesToBuild) assertTrue((new File(fn)).isFile());
-		/*String usageMessage = "\nBuildIndex class in package pitt.search.semanticvectors"
-			      + "\nUsage: java pitt.search.semanticvectors.BuildIndex -luceneindexpath PATH_TO_LUCENE_INDEX"
-			      + "\nBuildIndex creates termvectors and docvectors files in local directory."
-			      + "\nOther parameters that can be changed include number of dimensions, "
-			      + "vector type (real, binary or complex), seed length (number of non-zero entries in "
-			      + "basic vectors), minimum term frequency, max. number of non-alphabetical characters per term, "
-			      + "filtering of numeric terms (i.e. numbers), and number of iterative training cycles."
-			      + "\nTo change these use the command line arguments "
-			      + "\n  -vectortype [real, complex or binary]"
-			      + "\n  -dimension [number of dimension]"
-			      + "\n  -seedlength [seed length]"
-			      + "\n  -minfrequency [minimum term frequency]"
-			      + "\n  -maxnonalphabetchars [number non-alphabet characters (-1 for any number)]"
-			      + "\n  -filternumbers [true or false]"
-			      + "\n  -trainingcycles [training cycles]"
-			      + "\n  -docindexing [incremental|inmemory|none] Switch between building doc vectors incrementally"
-			      + "\n        (requires positional index), all in memory (default case), or not at all";*/
-		//"-luceneindexpath index/Abby_Watkins/positional_index/ -minfrequency 2 "
-//		+ "-termweight idf -porterstemmer true";
  		File index = new File("index");
  		File vector = new File("vector");
  		if(!vector.exists()){
@@ -132,29 +98,11 @@ public class LSAProcess {
 	}
 
 	private void build(String[] args) {
-		/*String usageMessage = "\nBuildIndex class in package pitt.search.semanticvectors"
-      + "\nUsage: java pitt.search.semanticvectors.BuildIndex -luceneindexpath PATH_TO_LUCENE_INDEX"
-      + "\nBuildIndex creates termvectors and docvectors files in local directory."
-      + "\nOther parameters that can be changed include number of dimensions, "
-      + "vector type (real, binary or complex), seed length (number of non-zero entries in "
-      + "basic vectors), minimum term frequency, max. number of non-alphabetical characters per term, "
-      + "filtering of numeric terms (i.e. numbers), and number of iterative training cycles."
-      + "\nTo change these use the command line arguments "
-      + "\n  -vectortype [real, complex or binary]"
-      + "\n  -dimension [number of dimension]"
-      + "\n  -seedlength [seed length]"
-      + "\n  -minfrequency [minimum term frequency]"
-      + "\n  -maxnonalphabetchars [number non-alphabet characters (-1 for any number)]"
-      + "\n  -filternumbers [true or false]"
-      + "\n  -trainingcycles [training cycles]"
-      + "\n  -docindexing [incremental|inmemory|none] Switch between building doc vectors incrementally"
-      + "\n        (requires positional index), all in memory (default case), or not at all";*/
 		FlagConfig flagConfig = null;
 		try {
 			flagConfig = FlagConfig.getFlagConfig(args);
 			args = flagConfig.remainingArgs;
 		} catch (IllegalArgumentException e) {
-//			System.err.println(usageMessage);
 			throw e;
 		}
 
@@ -163,31 +111,14 @@ public class LSAProcess {
 		}
 
 		String luceneIndex = flagConfig.luceneindexpath();
-//		VerbatimLogger.info("Seedlength: " + flagConfig.seedlength() + ", Dimension: "
-//				+ flagConfig.dimension() + ", Vector type: " + flagConfig.vectortype()
-//				+ ", Minimum frequency: " + flagConfig.minfrequency() + ", Maximum frequency: "
-//				+ flagConfig.maxfrequency() + ", Number non-alphabet characters: "
-//				+ flagConfig.maxnonalphabetchars() + ", Contents fields are: "
-//				+ Arrays.toString(flagConfig.contentsfields()) + "\n");
-
-//		String termFile = flagConfig.termvectorsfile();
-//		String docFile = flagConfig.docvectorsfile();
 		String termFile = args[1] + "termvectors.bin";
 		String docFile = args[0] + "docvectors.bin";
 
 		try {
 			TermVectorsFromLucene vecStore;
 			if (!flagConfig.initialtermvectors().isEmpty()) {
-				// If Flags.initialtermvectors="random" create elemental (random
-				// index)
-				// term vectors. Recommended to iterate at least once (i.e.
-				// -trainingcycles = 2) to
-				// obtain semantic term vectors.
-				// Otherwise attempt to load pre-existing semantic term vectors.
-//				VerbatimLogger.info("Creating term vectors ... \n");
 				vecStore = TermVectorsFromLucene.createTermBasedRRIVectors(flagConfig);
 			} else {
-//				VerbatimLogger.info("Creating elemental document vectors ... \n");
 				vecStore = TermVectorsFromLucene.createTermVectorsFromLucene(flagConfig, null);
 			}
 
@@ -206,8 +137,6 @@ public class LSAProcess {
 							"incremental_termvectors" + flagConfig.trainingcycles() + ".bin",
 							flagConfig, itermVectors);
 
-					// Write over previous cycle's docvectors until final
-					// iteration, then rename according to number cycles
 					if (i == flagConfig.trainingcycles() - 1)
 						docFile = "docvectors" + flagConfig.trainingcycles() + ".bin";
 
@@ -272,18 +201,6 @@ public class LSAProcess {
 	@SuppressWarnings({ "resource", "deprecation" })
 	void buildIndex() {
 		File[] names = new File(/*"contents"*/Final.content).listFiles();
-		// for(File name : names){
-		// String arg0 = name.getAbsolutePath().replace("contents", "index");
-		// File dir = new File(arg0);
-		// if(!dir.exists()){
-		// dir.mkdirs();
-		// }
-		// String arg1 = "contents";
-		// String [] args = new String [2];
-		// args[0] = "-luceneindexpath " + arg0;
-		// args[1] = arg1;
-//		 IndexFilePositions.main(args);
-		// }
 
 		for (File name : names) {
 			String indexPath = name.getAbsolutePath().replace(/*"contents"*/Final.content, "index");
@@ -297,11 +214,6 @@ public class LSAProcess {
 			String[] args = cmd.split("\\s+");
 
 			FlagConfig flagConfig = null;
-//			String usage = "java pitt.search.lucene.IndexFilePositions <root_directory> ";
-//			if (args.length == 0) {
-//				System.err.println("Usage: " + usage);
-//				System.exit(1);
-//			}
 			if (args.length > 0) {
 				flagConfig = FlagConfig.getFlagConfig(args);
 				// Allow for the specification of a directory to write the index
@@ -413,27 +325,6 @@ public class LSAProcess {
 	void cluster() throws IOException{
 		HashMap<String, Integer> numClusterMap = new HashMap<String, Integer>();
 		numClusterMap.put(Final.content.substring(Final.content.indexOf('_') + 1), 15);
-//		HashMap<String, Integer> numClusterMap = StatFiles.numClusterMap;
-		/*String usageMessage = "ClusterResults class in package pitt.search.semanticvectors"
-			      + "\nUsage: java pitt.search.semanticvectors.ClusterResults"
-			      + "\n                        -numsearchresults [number of search results]" 
-			      + "\n                        -numclusters [number of clusters]"
-			      + "\n                        <SEARCH ARGS>"
-			      + "\nwhere SEARCH ARGS is an expression passed to Search class.";
-		usageMessage = "\nSearch class in package pitt.search.semanticvectors"
-			      + "\nUsage: java pitt.search.semanticvectors.Search [-queryvectorfile query_vector_file]"
-			      + "\n                                               [-searchvectorfile search_vector_file]"
-			      + "\n                                               [-luceneindexpath path_to_lucene_index]"
-			      + "\n                                               [-searchtype TYPE]"
-			      + "\n                                               <QUERYTERMS>"
-			      + "\nIf no query or search file is given, default will be"
-			      + "\n    termvectors.bin in local directory."
-			      + "\n-luceneindexpath argument is needed if to get term weights from"
-			      + "\n    term frequency, doc frequency, etc. in lucene index."
-			      + "\n-searchtype can be one of SUM, SPARSESUM, SUBSPACE, MAXSIM,"
-			      + "\n    BALANCEDPERMUTATION, PERMUTATION, PRINTQUERY"
-			      + "\n<QUERYTERMS> should be a list of words, separated by spaces."
-			      + "\n    If the term NOT is used, terms after that will be negated.";*/
 		File vector = new File("vector");
 		File[] namesDir = vector.listFiles(new FilenameFilter() {
 			
@@ -448,7 +339,6 @@ public class LSAProcess {
 			String cmd = "-numclusters " + numCluster + " "+ name.getAbsolutePath() + "/docvectors.bin";
 			String args [] = cmd.split("\\s+");
 			int numRunsForOverlap = Main.numRunsForOverlap;
-	//		ClusterVectorStore.main(args);
 	
 		    FlagConfig flagConfig = FlagConfig.getFlagConfig(args);
 		    args = flagConfig.remainingArgs;
@@ -485,8 +375,6 @@ public class LSAProcess {
 				// Perform clustering and print out results.
 				System.out.println("Clustering vectors ..." + (numRunsForOverlap - runNumber));
 				clusters = ClusterResults.kMeansCluster(resultsVectors, flagConfig);
-	
-				// ClusterResults.writeCentroidsToFile(clusters);
 	
 				Hashtable<String, int[]> newOverlapResults = ClusterVectorStore.clusterOverlapMeasure(
 						clusters.clusterMappings, resultsVectors);
@@ -532,13 +420,6 @@ public class LSAProcess {
 			}
 			
 			Util.WriteOutXML(document, resultDir.getAbsolutePath() + "/" + name.getName() + ".clust.xml");
-//			Util.WriteOut("clusterRes.txt", buffer);
-	
-	//	    for (Enumeration<String> keys = mainOverlapResults.keys(); keys.hasMoreElements();) {
-	//	      String key = keys.nextElement(); 
-	//	      int[] matchAndTotal = mainOverlapResults.get(key);
-	//	      System.out.println(key + "\t" + (float) matchAndTotal[0] / (float) matchAndTotal[1]);
-	//	    }
 		}
 	}
 	
@@ -554,22 +435,6 @@ public class LSAProcess {
 	}
 
 	public static void main(String[] args) throws IllegalArgumentException, IOException {
-//		LSAProcess process = new LSAProcess();
-//		process.buildIndex();
-//		process.lsa();
-//		try {
-//			process.compare("/Users/aihe/Documents/NLP/NLP544PA2/contents/Abby_Watkins/raw/099/index.txt",
-//					"/Users/aihe/Documents/NLP/NLP544PA2/contents/Abby_Watkins/raw/035/index.txt");
-//			process.compare("/Users/aihe/Documents/NLP/NLP544PA2/contents/Abby_Watkins/raw/099/index.txt",
-//					"/Users/aihe/Documents/NLP/NLP544PA2/contents/Abby_Watkins/raw/032/index.txt");
-//			process.compare("/Users/aihe/Documents/NLP/NLP544PA2/contents/Abby_Watkins/raw/099/index.txt",
-//					"/Users/aihe/Documents/NLP/NLP544PA2/contents/Abby_Watkins/raw/111/index.txt");
-//			process.compare("/Users/aihe/Documents/NLP/NLP544PA2/contents/Abby_Watkins/raw/099/index.txt",
-//					"/Users/aihe/Documents/NLP/NLP544PA2/contents/Abby_Watkins/raw/052/index.txt");
-//			// System.out.println(sim);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		process.cluster();
+		
 	}
 }

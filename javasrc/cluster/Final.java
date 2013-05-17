@@ -42,11 +42,6 @@ public class Final {
 			System.exit(-1);
 		}
 		
-//		ParseFiles2 parseFiles2 = new ParseFiles2();
-//		parseFiles2.parseFile();
-//		Preprocess preprocess = new Preprocess();
-//		preprocess.process();
-		
 		for (int i = 1; i <= 5; ++i) {
 			content = "content_star" + i;
 			id2Content = new HashMap<String, String>();
