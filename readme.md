@@ -27,17 +27,26 @@ postgres=#  GRANT ALL PRIVILEGES ON DATABASE wiki to wiki;
 postgres=# \q
 ```
 
+* Change settings.py to reflect the database setting.
+
 * insert yelp review file into database:
 ```
-python preprocess.py -u xingshi -i -f ./yelp/yelp_review.json
+python preprocess.py -u -i -f ./yelp/yelp_review.json
 ```
 -f option should be provided the json file path.
 
 * discourse segmenting
 ```
-python preprocess.py -u xingshi -s 0 -e 1000 -f sent.txt -d ../../dp/SPADE/bin
+python preprocess.py -s 0 -e 1000 -f sent.txt -d ../../dp/SPADE/bin
 ```
--d option should provide the where the SPADE/bin is located.
+-d option should provide the where the SPADE/bin is located. Here, sent.txt would 
+
+Now, the reviews would be splited into clauses and stored in table rc's review_clauses column
+
+### Extract Pairs
+
+* We need to first extract 
+
 
 ### Database Description
 

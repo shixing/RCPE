@@ -1,12 +1,21 @@
 #!/bin/python
 # -*- coding: utf-8 -*-
 
+# extract.py 
+# Extract R-C paris from clauses.
+#
+# Author: Xing Shi
+# contact: xingshi@usc.edu
+#
+#
+
 import mydb
 import json
 import re
 from nltk.stem.wordnet import WordNetLemmatizer
 from stanford_parser import parser
 import json
+
 
 # parsers
 sp = parser.Parser()
@@ -240,7 +249,7 @@ def main():
     file = open('result.txt','w')
     jhfile = open('result.jh.txt','w')
     # db
-    CONN_STRING = mydb.get_CONN('wiki')
+    CONN_STRING = mydb.get_CONN()
     con = mydb.getCon(CONN_STRING)
     query = 'select id , review_clauses from review order by id limit 1000'
     rows = mydb.executeQueryResult(con,query,True)

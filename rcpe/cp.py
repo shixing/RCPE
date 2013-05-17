@@ -1,3 +1,12 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+# cp.py [ChunkParser]
+# deprecated: Used to be used as NER analysis
+#
+# Author: Xing Shi
+# contact: xingshi@usc.edu
+
 import nltk
 import pickle
 

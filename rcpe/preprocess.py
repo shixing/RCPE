@@ -149,7 +149,7 @@ def processSingle(start, end, fileName,dirName,p):
     con.close()
 
 def processBatch(p):
-    totalOneTime = 300#increment each time
+    totalOneTime = 300 #increment each time
     con = mydb.getCon(CONN_STRING)
     #nltk.download()
     sent_tokenizer = nltk.data.load('nltk:tokenizers/punkt/english.pickle')
@@ -226,7 +226,6 @@ if __name__ == '__main__':
     # option
     usage="usage: %prog [options]"
     parser = OptionParser(usage=usage)
-    parser.add_option("-u",'--user',dest='username',help='username')
     parser.add_option("-i","--insert",dest ='insert',action ='store_true', help="insert reviews", default = False)
     parser.add_option("-s","--start", dest='start',help="start id")
     parser.add_option("-e","--end", dest='end',help="end id")
@@ -234,9 +233,8 @@ if __name__ == '__main__':
     parser.add_option("-d","--dir",dest='dir',help="spade.pl dir")
     (options,args) = parser.parse_args()
     insert = options.insert
-    username = options.username
     
-    CONN_STRING = mydb.get_CONN(username)
+    CONN_STRING = mydb.get_CONN()
     p = re.compile('^\\W+$')
     
     if insert:

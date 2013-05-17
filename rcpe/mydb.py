@@ -11,14 +11,18 @@
 
 import psycopg2
 import sys
+import settings
 
-def get_CONN(username):
-    # for linux
-    if username == 'xingshi':
-        return "host='localhost' dbname='yelp' user='xingshi' password='xingshi'"
-    else:
-        # for mac
-        return "host='localhost' dbname='yelp' user='wiki' password='wiki'"
+
+def get_CONN():
+    username = settings.Database_User
+    password = settings.Database_Password
+    dbname = settings.Database_Name
+    s =  "host='localhost' dbname='__dbname__' user='__username__' password='__password__'"
+    s = s.replace('__dbname__',dbname)
+    s = s.replace('__username__',username)
+    s = s.replace('__password__',password)
+    return s
 
 
 def getCon(CONN_STRING):
