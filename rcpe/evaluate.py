@@ -42,9 +42,10 @@ def main():
     tfile = open(dir + '/evaluate.tuples.'+ str(offset) + '.txt','w')
     cfile = open(dir + '/evaluate.corefs.'+ str(offset) + '.txt','w')
     
-    CONN_STRING = mydb.get_CONN('wiki')
+    CONN_STRING = mydb.get_CONN()
     con = mydb.getCon(CONN_STRING)
     
+    # change the amount of results, currently is 200
     query = 'select * from rc order by id limit 200 offset 0'
     rows = mydb.executeQueryResult(con,query,False)
     

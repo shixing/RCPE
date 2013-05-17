@@ -6,8 +6,7 @@
 #
 # Author: Xing Shi
 # contact: xingshi@usc.edu
-#
-#
+
 
 import mydb
 import json

@@ -31,22 +31,46 @@ postgres=# \q
 
 * insert yelp review file into database:
 ```
-python preprocess.py -u -i -f ./yelp/yelp_review.json
+python -m rcpe.preprocess -u -i -f ./yelp/yelp_review.json
 ```
 -f option should be provided the json file path.
 
 * discourse segmenting
+
 ```
-python preprocess.py -s 0 -e 1000 -f sent.txt -d ../../dp/SPADE/bin
+# edit setenv.sh
+. setenv.sh 
+python -m rcpe.preprocess -s 0 -e 1000 -f sent.txt -d ../../dp/SPADE/bin
 ```
--d option should provide the where the SPADE/bin is located. Here, sent.txt would 
+-d option should provide the where the SPADE/bin is located. Here, sent.txt would be a file to store temp results.
 
 Now, the reviews would be splited into clauses and stored in table rc's review_clauses column
 
 ### Extract Pairs
 
-* We need to first extract 
+* Extract reason consequence pairs
 
+```
+python -m rcpe.extract
+```
+This would generate a set of result files : result.[sentence/tuple].json.txt result.txt and result.jh.txt.
+
+* Generate result.coref.json.txt [tofo for AiHe]
+
+* Insert result info database:
+
+```
+python -m rcpe.insertDBResult
+```
+
+### Evaluate Preparation 
+
+* Read the database rc, convert reason and tuple into a .tsv file which is easy imported into Excel.
+
+```
+python -m rcpe.evalueate 
+```
+You should first change dir and amount of results you want in evaluate.py
 
 ### Database Description
 

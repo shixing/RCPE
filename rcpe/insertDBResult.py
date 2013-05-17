@@ -1,3 +1,12 @@
+#!/bin/python
+# -*- coding: utf-8 -*-
+
+# insertDBResult.py 
+# Read three files: result.[sentence/tuple/coref].json.txt, insert these result into table rc
+#
+# Author: Xing Shi
+# contact: xingshi@usc.edu
+
 import mydb
 import json
 
@@ -24,7 +33,7 @@ def insert(con,fileName,query,name,reverse):
 
 def main():
     
-    CONN_STRING = mydb.get_CONN('wiki')
+    CONN_STRING = mydb.get_CONN()
     con = mydb.getCon(CONN_STRING)
     
     # create db
