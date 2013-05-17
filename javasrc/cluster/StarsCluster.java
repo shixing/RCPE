@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -179,8 +178,8 @@ public class StarsCluster {
 	 */
 	public static void main(String[] args) throws Throwable{
 		StarsCluster cluster = new StarsCluster();
-		cluster.readConReaMap(new File("rcMap.txt"));
-		Element element = cluster.readStars(new File("result/cons.clust.xml"));
+		cluster.readConReaMap(new File(/*"rcMap.txt"*/args[1]));
+		Element element = cluster.readStars(new File(/*"result/cons.clust.xml"*/args[2]));
 		cluster.cluster(element);
 		cluster.findReason();
 	}

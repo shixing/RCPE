@@ -3,7 +3,7 @@
 
 # corefDB.py
 #
-# to implement operations about coref in database
+# to implement operations about coref in DB
 # contains creating table, inserting entries and clearing table
 #
 # Usage: python getConse.py -u user [-c doCreate, -i doInsert, -d doClear] -d dir

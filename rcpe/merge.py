@@ -5,9 +5,9 @@
 #
 # to merge the results of SPADE parseing and coref analysis
 #
-# Usage: python getConse.py -u user -f file
-# user specifies the username of DB
-# file is the path to input file
+# Usage: python getConse.py -u username -f file
+# username - the username of DB
+# file - the path to input file
 #
 # Author: Ai He
 # contact: aihe@usc.edu

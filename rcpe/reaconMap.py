@@ -24,6 +24,7 @@ import json
 def getMap(input, output):
     json_data = open(input)
     crMap = {}
+    
     for entry in json_data:
         data = json.loads(entry)
         iden = str(data['id'])
@@ -34,14 +35,14 @@ def getMap(input, output):
             crMap[iden + '_' + str(cs[0][1])] = []
             for r in rs:
                 crMap[iden + '_' + str(cs[0][1])].append(iden + '_' + str(r[1]))
-    #print crMap
+    
     f = open(output, 'w')
     for c in crMap:
         f.write(c + ' ')
         for r in crMap[c]:
             f.write(r + ' ')
         f.write('\n')
-    f.close
+    f.close()
 
 
 if __name__ == '__main__':
