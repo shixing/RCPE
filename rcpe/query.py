@@ -1,3 +1,14 @@
+'''
+possible fields are name, city and full_addr
+they should be spelt exactly the same
+just follow the format in main
+
+
+must - must contain
+mustnot - must not contain
+should - default option
+they also should be spelt exactly the same and can't be missed
+'''
 __author__ = 'Ai He'
 from socket import *
 import json
@@ -22,5 +33,5 @@ def getBusiness(jsonQuery):
 
 if __name__ == '__main__':
     #j = json.loads('{"name":["tax service", "must"], "state":["CA", "mustnot"], "type":["business", "should"]}')
-    #getBusiness('{"name":["tax service", "must"], "state":["CA", "mustnot"], "type":["business", "should"]}')
-    getBusiness('{"name":"tax service"}')
+    getBusiness('{"name":["tax service", "must"], "city":["Chandler", "mustnot"], "type":["business", "should"]}')
+    #getBusiness('{"name":"tax service"}')
