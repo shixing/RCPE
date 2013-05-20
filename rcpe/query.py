@@ -15,7 +15,8 @@ import json
 import time
 
 def getBusiness(jsonQuery):
-    HOST = 'localhost'
+    HOST = 'sava.usc.edu'
+    #HOST = 'localhost'
     PORT = 12345
     BUFFERSIZE = 1024
     ADDR = HOST, PORT
@@ -33,5 +34,5 @@ def getBusiness(jsonQuery):
 
 if __name__ == '__main__':
     #j = json.loads('{"name":["tax service", "must"], "state":["CA", "mustnot"], "type":["business", "should"]}')
-    getBusiness('{"name":["tax service", "must"], "city":["Chandler", "mustnot"], "type":["business", "should"]}')
-    #getBusiness('{"name":"tax service"}')
+    #getBusiness('{"business":{"name":["tax service", "must"], "city":["Chandler", "should"], "type":["business", "should"]}}')
+    getBusiness('{"rcpair":{"reason":["good place", "must"]}}')
