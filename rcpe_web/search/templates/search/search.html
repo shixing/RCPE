@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Search People's Opinion</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="static/search/css/reset.css" type="text/css" media="all">
+  <link rel="stylesheet" href="static/search/css/style.css" type="text/css" media="all">
+  <script type="text/javascript" src="static/search/js/jquery-1.4.2.min.js" ></script>
+  <script type="text/javascript" src="static/search/js/cufon-yui.js"></script>
+  <script type="text/javascript" src="static/search/js/Humanst521_BT_400.font.js"></script>
+  <script type="text/javascript" src="static/search/js/Humanst521_Lt_BT_400.font.js"></script>
+	<script type="text/javascript" src="static/search/js/roundabout.js"></script>
+  <script type="text/javascript" src="static/search/js/roundabout_shapes.js"></script>
+  <script type="text/javascript" src="static/search/js/gallery_init.js"></script>
+  <script type="text/javascript" src="static/search/js/cufon-replace.js"></script> 
+  <script type="text/javascript" src="static/search/js/search.js"></script>
+  <!--[if lt IE 7]>
+  	<link rel="stylesheet" href="css/ie/ie6.css" type="text/css" media="all">
+  <![endif]-->
+  <!--[if lt IE 9]>
+  	<script type="text/javascript" src="js/html5.js"></script>
+    <script type="text/javascript" src="js/IE9.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <!-- header -->
+  <header>
+    <div class="container">
+    	<h1><a href="index.html">Know Why</a></h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="search/search.html"  class="current">Search</a></li>
+          <li><a href="search/about.html">Develop</a></li>
+          <li><a href="search/contacts.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!-- #search bar -->
+  <div class="main-box">
+    
+    <div class="container" id="search_bar">
+      <div class="search_inside">
+	<div class="search_title">
+	  Find <span style="font-weight:200;">Reason</span> of People's Choice
+	</div>
+	<div class="wrapper" style="position: absolute;left: 150px;">
+	  <input class = "search_input" type="text" id="query_name"/>
+	  <label class = "search_prefix">NEAR</label>
+	  <input class = "search_input" type="text" id="query_address"/>
+	  <input type='button' value='Go!' class="search_button" onclick="searchBusiness()"/>
+	</div>
+      </div>
+      
+    </div>
+    <!--# show results -->
+    <div class = "scrollable">
+      <div class = "inside">
+      <div class = "container" id = "results_container">
+
+      </div>
+      </div>
+    </div>
+    <!--/# show results -->
+  </div>
+  <!-- /#search bar -->
+  
+  <!-- footer -->
+  <footer>
+    <div class="container">
+    	<div class="wrapper">
+        <div class="fleft">
+	  The website is designed by Xing Shi and Ai He.</p>
+	  Website template is designed by TemplateMonster.com
+	</div>
+        <div class="fright"><!--<a rel="nofollow" href="http://www.templatemonster.com/" target="_blank">Website template</a> designed by TemplateMonster.com&nbsp; &nbsp; |&nbsp; &nbsp; <a href="http://templates.com/product/3d-models/" target="_blank">3D Models</a> provided by Templates.com--></div>
+      </div>
+    </div>
+  </footer>
+  <div id = "shadow" style="display:none;">
+    <div id = "pairs_wrapper">
+      <img id = "close_icon" src ="static/search/images/close-icon.png" height = "20px" onclick="loadingOff()"/>
+    <div id = "pairs_window">
+
+
+    </div>
+    <div>
+  </div>
+  <script type="text/javascript"> Cufon.now(); </script>
+</body>
+</html>

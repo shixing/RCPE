@@ -1,5 +1,8 @@
 lib/*
 yelp/*
 result/*
+db_backup/*
 .DS_Store
-.*~
+*~
+[#].[#]
+*.pyc
