@@ -15,7 +15,7 @@ import json
 import time
 
 def getBusiness(jsonQuery):
-    HOST = 'sava.usc.edu'
+    HOST = 'kunene.usc.edu'
     #HOST = 'localhost'
     PORT = 12345
     BUFFERSIZE = 1024

@@ -34,6 +34,7 @@ public class MainProcess {
 	static String bizIdxPath = "";
 	static String rcIdxPath = "";
 	static int port = 0;
+	public static int returnNum = 0;
 	
 	static{
 		try {
@@ -55,6 +56,7 @@ public class MainProcess {
 			bizIdxPath = eles.get(2).attributeValue("bizIdxPath");
 			rcIdxPath = eles.get(3).attributeValue("rcIdxPath");
 			port = Integer.parseInt(eles.get(4).attributeValue("port"));
+			returnNum = Integer.parseInt(eles.get(5).attributeValue("returnNum"));
 		} catch (Exception e) {
 			System.err.println("config.xml input wrong, use the default values");
 			System.exit(-1);

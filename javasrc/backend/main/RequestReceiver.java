@@ -98,7 +98,7 @@ class CreateServer extends Thread {
 						}
 					}
 				}
-				ArrayList<Business> buzs = BizRetriever.getObject().search(fldsR, vals, flags, 20);
+				ArrayList<Business> buzs = BizRetriever.getObject().search(fldsR, vals, flags, MainProcess.returnNum);
 				for (Business buz : buzs) {
 					JSONObject jo = buz.toJSONObject();
 					out.println(jo.toString());
@@ -129,7 +129,7 @@ class CreateServer extends Thread {
 						}
 					}
 				}
-				ArrayList<RCPair> rcPairs = RCRetriever.getObject().search(fldsR, vals, flags, 20);
+				ArrayList<RCPair> rcPairs = RCRetriever.getObject().search(fldsR, vals, flags, MainProcess.returnNum);
 				for (RCPair rcPair : rcPairs) {
 					JSONObject jo = rcPair.toJSONObject();
 					out.println(jo.toString());
