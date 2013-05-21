@@ -13,6 +13,8 @@ Back-End of RCPE
 ### Configuration File
 config.xml shouls be placed at the same directory with the runable jar
 
+It has the format as follows:
+
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
@@ -21,6 +23,7 @@ config.xml shouls be placed at the same directory with the runable jar
 <para bizIdxPath = "bizidx"/>
 <para rcIdxPath = "rcidx"/>
 <para port = "12345"/>
+<para returnNum = "100"/>
 </root>
 ```
 * bizFile - path to business data file
@@ -28,6 +31,7 @@ config.xml shouls be placed at the same directory with the runable jar
 * bizIdxPath - dir to build business index
 * rcIdxPath - dir to build rc index
 * port - port number to receive request
+* returnNum - max number of results to return for a query
 
 ### External Tools or Lib
 * Lucene
