@@ -112,7 +112,7 @@ def searchRCPair(request):
             query['reason']=[request.GET['r'],'should']
         if 'c' in request.GET:
             query['consequence']=[request.GET['c'],'should']
-            query = json.dumps({"rcpair":query})
+        query = json.dumps({"rcpair":query})
         records = getBusiness(query)
         rc_rs = []
         for record in records:
@@ -143,3 +143,4 @@ def searchRCPair(request):
         return HttpResponse(json.dumps(results))
     else:
         return HttpResponse('Bad Request!')
+b
