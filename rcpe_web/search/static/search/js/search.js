@@ -205,3 +205,80 @@ function expand(id)
     }
 }
 
+function searchRCPair()
+{
+    xmlhttp = new XMLHttpRequest()
+    reason = document.getElementById('query_reason').value
+    consequence = document.getElementById('query_consequence').value
+    url = 'searchRCPair.action'
+    connection = '?'
+    if (reason != '')
+    {
+	url += connection+'r='+reason
+	connection = '&'
+    }
+    if (consequence != '')
+    {
+	url += connection+'c='+consequence
+    }
+    xmlhttp.onreadystatechange = function()
+    {
+	if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	{
+	    tempHtml = '';
+	    results = eval('('+xmlhttp.responseText+')')
+	    for (var i=0;i<results.length;i++)
+	    {
+		temp = pairHTML;
+		temp = temp.replace('__pair_rank__',i.toString())
+		pair_number = (i+1).toString();
+		if (i+1<10)
+		{
+		    pair_number = '0'+pair_number;
+		}
+		temp = temp.replace('__pair_number__',pair_number)
+		result = results[i]
+		clauses = result['clauses']
+		has_clauses = true;
+		if (clauses.length == 0)
+		{
+		    has_clauses = false;
+		    clauses = ['Sorry, full review currently is not available.']
+		}
+		consequence = result['consequence'][0][0]
+		consequence_id = result['consequence'][0][1]
+		if (has_clauses)
+		    clauses[consequence_id] = '<span class="span_red">'+clauses[consequence_id]+'</span>'
+		reason1 = result['reason'][0][0]
+		reason1_id = result['reason'][0][1]
+		if (has_clauses)
+		    clauses[reason1_id] = '<span class="span_green">'+clauses[reason1_id]+'</span>'
+		reason2 = ' '
+		if (result['reason'].length>=2)
+		{
+		    reason2 = result['reason'][1][0];
+		    reason2_id = result['reason'][1][1];
+		    if (has_clauses)
+			clauses[reason2_id] = '<span class="span_green">'+clauses[reason2_id]+'</span>';
+		}
+		full_review = '';
+		for (var j = 0;j<clauses.length;j++)
+		{
+		    full_review+=clauses[j]+' ';
+		}
+		temp = temp.replace('__reason_1__',reason1);
+		temp = temp.replace('__reason_2__',reason2);
+		temp = temp.replace('__consequence__',consequence);
+		temp = temp.replace('__full_review_html__',full_review);
+		full_review_id = 'full_review_'+i.toString();
+		temp = temp.replace(/__full_review_id__/g,full_review_id);
+		tempHtml += temp;
+
+	    }
+	    $("#results_container")[0].innerHTML = tempHtml;
+	}
+    }
+    xmlhttp.open("GET",url,true)
+    xmlhttp.send()
+}
+

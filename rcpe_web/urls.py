@@ -11,6 +11,10 @@ urlpatterns = patterns(
     url(r'^search.html$', 'rcpe_web.search.views.search'),
     url(r'^search.action$', 'rcpe_web.search.views.searchQuery'),
     url(r'^searchRC.action$','rcpe_web.search.views.searchPairs'),
+    url(r'^search_pair.html$','rcpe_web.search.views.search_pair_html'),
+    url(r'^searchRCPair.action$','rcpe_web.search.views.searchRCPair'),
+    url(r'^contacts.html$','rcpe_web.search.views.contacts_html'),
+
     # url(r'^rcpe_web/', include('rcpe_web.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

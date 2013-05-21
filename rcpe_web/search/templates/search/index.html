@@ -13,6 +13,7 @@
   <script type="text/javascript" src="static/search/js/roundabout_shapes.js"></script>
   <script type="text/javascript" src="static/search/js/gallery_init.js"></script>
   <script type="text/javascript" src="static/search/js/cufon-replace.js"></script>
+  <script type="text/javascript" src="static/search/js/search.js"></script>
   <!--[if lt IE 7]>
   	<link rel="stylesheet" href="css/ie/ie6.css" type="text/css" media="all">
   <![endif]-->
@@ -31,7 +32,7 @@
         <ul>
           <li><a href="index.html" class="current">Home</a></li>
           <li><a href="search.html">Search</a></li>
-          <li><a href="about.html">Develop</a></li>
+	  <li><a href="search_pair.html">RCPair</a></li>
           <li><a href="contacts.html">Contact</a></li>
         </ul>
       </nav>
@@ -41,16 +42,16 @@
   <section id="gallery">
   	<div class="container">
     	<ul id="myRoundabout">
-      	<li><img src="static/search/images/slide3.jpg" alt=""></li>
-        <li><img src="static/search/images/slide2.jpg" alt=""></li>
-        <li><img src="static/search/images/slide5.jpg" alt=""></li>
-        <li><img src="static/search/images/slide1.jpg" alt=""></li>
-        <li><img src="static/search/images/slide4.jpg" alt=""></li>
+      	<li style="background:white;"><img  src="static/search/images/slide3.png" alt=""></li>
+        <li style="background:white;"><img  src="static/search/images/slide2.png" alt=""></li>
+        <li style="background:white;"><img src="static/search/images/slide5.png" alt=""></li>
+        <li style="background:white;"><img src="static/search/images/slide1.png" alt=""></li>
+        <li style="background:white;"><img src="static/search/images/slide4.png" alt=""></li>
       </ul>
   	</div>
   </section>
   <!-- /#gallery -->
-  <div class="main-box">
+  <div class="main-box-o">
     <div class="container">
       <div class="inside">
         <div class="wrapper">
@@ -60,24 +61,19 @@
             <!-- .news -->
             <ul class="news">
             	<li>
-              	<figure><strong>22</strong>June</figure>
-                <h3><a href="#">Sed ut perspiciatis unde</a></h3>
-                Domnis iste natus error sit voluptam accusa doloremque <a href="#">...</a>
+              	<figure><strong>20</strong>May</figure>
+                <h3><a href="#">Website "Know Why" Published</a></h3>
+                After several days hardworking, our first version of website finanly published. Currently, it supports business search and reason-consequence pair search!
               </li>
               <li>
-              	<figure><strong>09</strong>June</figure>
-                <h3><a href="#">Totam rem aperiam</a></h3>
-                Eaqueipsa quae abillo inventoretis et quasi architecto beatae <a href="#">...</a>
+              	<figure><strong>20</strong>April</figure>
+                <h3><a href="#">RC Pair Extraction Completed</a></h3>
+                Our first version of reason consequence pairs extraced from users' reviews. We've got about 10,000 pairs from about 220,000 paragraphs of reviews.
               </li>
               <li>
-              	<figure><strong>31</strong>May</figure>
-                <h3><a href="#">Inventore veritatis et quasi</a></h3>
-                Architecto beatae vitae dicta sunt explicabo <a href="#">...</a>
-              </li>
-              <li>
-              	<figure><strong>25</strong>May</figure>
-                <h3><a href="#">Nemo enim ipsam</a></h3>
-                Voluptatem quia voluptas sit asper natur aut odit aut fugit <a href="#">...</a>
+              	<figure><strong>20</strong>March</figure>
+                <h3><a href="#">Got Yelp.com Data</a></h3>
+                Got Yelp data from Yelp-DataChallenge. We are interested in the raw text data, like user reviews.
               </li>
             </ul>
             <!-- /.news -->
@@ -86,10 +82,14 @@
           <section id="content">
             <article>
             	<h2>Welcome to <span>Know Why!</span></h2>
-              <p>Design Company is a free web template created by TemplateMonster.com team. This website template is optimized for 1024X768 screen resolution. It is also HTML5 &amp; CSS3 valid.</p>
-              <figure><a href="#"><img src="images/banner1.jpg" alt=""></a></figure>
-              <p>This website template has several pages: <a href="index.html">Home</a>, <a href="about.html">About us</a>, <a href="privacy.html">Privacy Policy</a>, <a href="gallery.html">Gallery</a>, <a href="contacts.html">Contact us</a> (note that contact us form – doesn’t work), <a href="sitemap">Site Map</a>.</p>
-              This website template can be delivered in two packages - with PSD source files included and without them. If you need PSD source files, please go to the template download page at TemplateMonster to leave the e-mail address that you want the template ZIP package to be delivered to.
+              <p><span style="font-weight:bold;">Know Why</span> is trying to get a deep understanding of people's opinion from yelp's reviews.</p>
+	      
+	      <p>we have built a database containing <span style="font-weight:bold;">Reason-Consequence pairs</span> extracted from a Yelp.com review dataset. The difference between our work and the existing causality database lies in that the reason and consequence of a pair are sentences-level instead of word level.  Our precision of causality relation is relatively high, achieving 84%, making it a good resource to analysis the causality relation as well as users' opinion.</p>
+
+              <figure ><a href="#"><img style="height:250px;" src="static/search/images/statistic.png" alt=""></a></figure>
+              <p>We now have 10,000 more pairs of causality relationship and they have a very high precision which can be treated as the labeled data. You can browse these pair in two ways: Through <a href="search.html">Search</a>, you can first search the business by name and address, then browse the relevant RC pairs. The second way is to directly search RC pairs by keywords in reason and consequence respectively in <a href="search_pair.html">RCPair</a>. </p>
+	      <p>In the near future, we intend to build a model to detect the causality relationship between two clauses and train the model in these 10,000 more pairs. Also,we plan to use the result of co-relation reference dissolution more deeply. The way we expect to do is to find the common part(the parts that are in the same co-reference chain) and then extract abstract templates from those reasons and consequences pairs. We could build another model or do some casual extraction based these abstract causality pairs.</p>
+	      <a class="download_file" href="static/search/pdf/Build_Causaility_Knowledgebase_from_Yelp_Reviews.pdf" class="download_file">Download Report Paper</a>
             </article> 
           </section>
         </div>
@@ -97,17 +97,18 @@
     </div>
   </div>
   <!-- footer -->
-  <footer>
+  <footer style="position:static;">
     <div class="container">
     	<div class="wrapper">
         <div class="fleft">
-	  The website is designed by Xing Shi and Ai He.</p>
+	  The website is designed by Xing Shi and Ai He.<p>
 	  Website template is designed by TemplateMonster.com
 	</div>
-        <div class="fright"><!--<a rel="nofollow" href="http://www.templatemonster.com/" target="_blank">Website template</a> designed by TemplateMonster.com&nbsp; &nbsp; |&nbsp; &nbsp; <a href="http://templates.com/product/3d-models/" target="_blank">3D Models</a> provided by Templates.com--></div>
+        
       </div>
     </div>
   </footer>
+  <a href="https://github.com/shixing/rcpe"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png" alt="Fork me on GitHub"></a>
   <script type="text/javascript"> Cufon.now(); </script>
 </body>
 </html>

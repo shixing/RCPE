@@ -6,7 +6,7 @@ from socket import *
 
 
 def getBusiness(jsonQuery):
-    HOST = '127.0.0.1'
+    HOST = 'sava.usc.edu'
     PORT = 12345
     BUFFERSIZE = 1024
     ADDR = HOST, PORT
@@ -32,6 +32,12 @@ def getBusiness(jsonQuery):
         bzn = json.loads(line)
         bzns.append(bzn)
     return bzns
+
+def search_pair_html(request):
+    return render(request,'search/search_pair.html')
+
+def contacts_html(request):
+    return render(request,'search/contacts.html')
 
 
 def home(request):
@@ -97,4 +103,43 @@ def searchPairs(request):
         return HttpResponse(json.dumps(results))
     else:
         return HttpResponse('Bad Request!')
-            
+
+
+def searchRCPair(request):
+    if len(request.GET)>0:
+        query = {}
+        if 'r' in request.GET:
+            query['reason']=[request.GET['r'],'should']
+        if 'c' in request.GET:
+            query['consequence']=[request.GET['c'],'should']
+            query = json.dumps({"rcpair":query})
+        records = getBusiness(query)
+        rc_rs = []
+        for record in records:
+            id = record['RID']
+            rc_r = Rc.objects.filter(review__id__exact = id)
+            rc_rs+=rc_r
+        results = []
+        for rc_r in rc_rs:
+            jsonPairs = json.loads(rc_r.pairs)
+            for jsonPair in jsonPairs:
+                result = {}
+                reason = jsonPair[0]
+                consequence = jsonPair[1]
+                # print reason,consequence
+                # print rc_r.review.review_clauses
+                # print rc_r.id
+                reviewClauses = rc_r.review.review_clauses
+                if reviewClauses == None:
+                    reviewClauses = []
+                else:
+                    reviewClauses = reviewClauses.split('###')
+                result['id']=rc_r.id
+                result['reason']=reason
+                result['consequence']=consequence
+                result['clauses'] = reviewClauses
+                results.append(result)
+
+        return HttpResponse(json.dumps(results))
+    else:
+        return HttpResponse('Bad Request!')
