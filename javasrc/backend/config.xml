@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+<para bizFile = "yelp_academic_dataset_business.json"/>
+<para rcFile = "result.sentence.json.txt"/>
+<para bizIdxPath = "bizidx"/>
+<para rcIdxPath = "rcidx"/>
+<para port = "12345"/>
+</root>
