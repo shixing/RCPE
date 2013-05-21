@@ -3,7 +3,10 @@ yelp/*
 result/*
 db_backup/*
 .DS_Store
+<<<<<<< HEAD
 *~
 [#].[#]
 *.pyc
-*[#]
+=======
+*~
+>>>>>>> lucene_branch
