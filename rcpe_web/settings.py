@@ -4,7 +4,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    # ('Xing Shi', 'shixing19910105@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -98,6 +98,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'tracking.middleware.VisitorTrackingMiddleware',
 )
 
 ROOT_URLCONF = 'rcpe_web.urls'
@@ -116,7 +117,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admin',
     'rcpe_web.search',
+    'rcpe_web.tracking',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
