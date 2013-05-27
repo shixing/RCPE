@@ -22,7 +22,7 @@ def update_active_users(request):
     """
     Returns a list of all active users
     """
-    if request.is_ajax():
+    if True:
         active = Visitor.objects.active()
         user = getattr(request, 'user', None)
 
@@ -49,7 +49,7 @@ def get_active_users(request):
     Retrieves a list of active users which is returned as plain JSON for
     easier manipulation with JavaScript.
     """
-    if request.is_ajax():
+    if True:#request.is_ajax():
         active = Visitor.objects.active().reverse()
         now = datetime.now()
 
@@ -61,11 +61,11 @@ def get_active_users(request):
                     'user_agent': uc(v.user_agent),
                     'referrer': uc(v.referrer),
                     'url': uc(v.url),
-                    
+                    'ip':uc(v.ip_address),
                     'page_views': v.page_views,
                     'geoip': v.geoip_data_json,
                     'last_update': (now - v.last_update).seconds,
-                    'friendly_time': ', '.join(friendly_time((now - v.last_update).seconds)),
+                    #'friendly_time': ', '.join(friendly_time((now - v.last_update).seconds)),
                 } for v in active]}
         except:
             log.error('There was a problem putting all of the visitor data together:\n%s\n\n%s' % (traceback.format_exc(), locals()))
@@ -126,6 +126,8 @@ def get_all_users(request):
 
         # we don't put the session key or IP address here for security reasons
         try:
+            print len(active)
+            print active
             data = {'users': [{
                     'id': v.id,
                     #'user': uc(v.user),
@@ -136,9 +138,10 @@ def get_all_users(request):
                     'page_views': v.page_views,
                     'geoip': v.geoip_data_json,
                     'last_update': (now - v.last_update).seconds,
-                    'friendly_time': ', '.join(friendly_time((now - v.last_update).seconds)),
-                } for v in active]}
+                    #'friendly_time': ', '.join(friendly_time((now - v.last_update).seconds)),
+                } for v in active] }
         except:
+            print traceback.format_exc()
             log.error('There was a problem putting all of the visitor data together:\n%s\n\n%s' % (traceback.format_exc(), locals()))
             return HttpResponse(content='{}', mimetype='text/javascript')
 
