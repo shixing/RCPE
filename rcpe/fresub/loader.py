@@ -14,6 +14,9 @@ from sent import Sent
 import cPickle
 import threading
 import time
+from multiprocessing import Process,Queue
+
+
 
 class Loader:
     jsonFile = os.path.join(settings.PROJECT_DIR,'result/raw/result.sentence.json.txt')
@@ -25,7 +28,7 @@ class Loader:
         start = time.time()*1000
         data = None
         if from_scratch:
-            data = Loader.load_from_json_multi()
+            data = Loader.load_from_json_multiprocess()
         else:
             if os.path.exists(Loader.pickleFile):
                 data= Loader.load_from_pickle()
@@ -107,7 +110,7 @@ class Loader:
 
 
     @staticmethod
-    def load_from_json_multi():
+    def load_from_json_multithread():
         data = [] # array of Sent
         jf = open(Loader.jsonFile,'r')
         lines = []
@@ -130,7 +133,70 @@ class Loader:
         
         return data
 
+    
+    @staticmethod
+    def processJSONs(queue,lines,nid,num):
+        data = []
+        i=0
+        k=0
+        for line in lines:
+            i+=1
+            if (i % num) != nid:
+                continue
+            if k%100 ==0:
+                print 't' + str(nid) + ':' + str(k)
+            k+=1
+            jline = json.loads(line)
+            id=str(jline['id'])
+            sent_pairs = jline['sen_pairs']
+            for sent_pair in sent_pairs:
+                reasons = sent_pair[0]
+                cons = sent_pair[1]
+                for reason in reasons:
+                    sid = str(reason[1])
+                    raw = reason[0]
+                    sent = Sent(id+'_'+sid,'R',raw)
+                    data.append(sent)
+                for consequece in cons:
+                    sid = str(consequece[1])
+                    raw = consequece[0]
+                    sent = Sent(id+'_'+sid,'C',raw)
+                    data.append(sent)
+        
+        queue.put(data)
+  
 
+                    
+    @staticmethod
+    def load_from_json_multiprocess():
+        data = [] # array of Sent
+        jf = open(Loader.jsonFile,'r')
+        lines = []
+        process_num=4
+        for line in jf:
+            lines.append(line)
+
+        q = Queue()
+        processes = []
+        for i in xrange(process_num):
+            p = Process(target=Loader.processJSONs,args=(q,lines,i,process_num))
+            p.start()
+            processes.append(p)
+        
+        for i in xrange(process_num):
+            d = q.get()
+            print 'len:',len(d)
+            data+=d
+       
+        for p in processes:
+            p.join()
+
+        # save it into pickle
+        cPickle.dump(data,open(Loader.pickleFile,'w'))
+
+        return data
+        
+        
     @staticmethod
     def load_from_pickle():
         data = cPickle.load(open(Loader.pickleFile,'r'))

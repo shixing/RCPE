@@ -12,6 +12,13 @@ Reason Consequence Pairs Extraction (RCPE)
 * Download Reference Resolver [todo for aihe]
 
 * Get yelp challenge data at http://www.yelp.com/dataset_challenge/ or contact us to get it.
+* download nltk for python
+* download nltk packages: wordnet and maxent_treebank_pos_tagger
+* download numpy package for python
+```
+sudo pip install numpy
+```
+
 
 ### Preprocess
 
