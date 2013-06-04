@@ -9,7 +9,7 @@
 
 import os
 
-PROJECT_DIR = os.path.abspath('../../')
+PROJECT_DIR = '/Users/xingshi/Workspace/misc/rcpe'
 
 TEMP_DIR = os.path.join(PROJECT_DIR,'temp')
 

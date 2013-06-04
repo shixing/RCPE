@@ -35,7 +35,7 @@ class Loader:
             else:
                 data= Loader.load_from_json()
         end = time.time()*1000
-        print end-start
+        print end-start,len(data)
         return data
 
     @staticmethod
@@ -136,6 +136,8 @@ class Loader:
     
     @staticmethod
     def processJSONs(queue,lines,nid,num):
+        from rcpe.stanford_parser import parser
+        sp = parser.Parser()
         data = []
         i=0
         k=0
@@ -155,12 +157,12 @@ class Loader:
                 for reason in reasons:
                     sid = str(reason[1])
                     raw = reason[0]
-                    sent = Sent(id+'_'+sid,'R',raw)
+                    sent = Sent(id+'_'+sid,'R',raw,sp)
                     data.append(sent)
                 for consequece in cons:
                     sid = str(consequece[1])
                     raw = consequece[0]
-                    sent = Sent(id+'_'+sid,'C',raw)
+                    sent = Sent(id+'_'+sid,'C',raw,sp)
                     data.append(sent)
         
         queue.put(data)

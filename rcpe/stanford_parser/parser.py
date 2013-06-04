@@ -1,6 +1,8 @@
 import jpype
 from standoff import TextStandoff
 
+
+
 class ParserError(Exception):
     def __init__(self, *args, **margs):
         Exception.__init__(self, *args,**margs)
@@ -76,12 +78,13 @@ stanford_parser_home = None
 
 def startJvm():
     import os
-    os.environ.setdefault("STANFORD_PARSER_HOME", "3rdParty/stanford-parser/stanford-parser-2010-08-20")
+    os.environ.setdefault("STANFORD_PARSER_HOME", "/Users/xingshi/Workspace/misc/rcpe/lib/stanford-parser-2010-08-20")
     global stanford_parser_home
     stanford_parser_home = os.environ["STANFORD_PARSER_HOME"]
     jpype.startJVM(jpype.getDefaultJVMPath(),
                    "-ea",
                    "-Djava.class.path=%s/stanford-parser.jar" % (stanford_parser_home),)
+
 startJvm() # one jvm per python instance.
 
 class Parser:
