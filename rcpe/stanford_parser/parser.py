@@ -1,5 +1,7 @@
 import jpype
 from standoff import TextStandoff
+from rcpe import settings
+
 
 class ParserError(Exception):
     def __init__(self, *args, **margs):
@@ -76,12 +78,13 @@ stanford_parser_home = None
 
 def startJvm():
     import os
-    os.environ.setdefault("STANFORD_PARSER_HOME", "3rdParty/stanford-parser/stanford-parser-2010-08-20")
+    os.environ.setdefault("STANFORD_PARSER_HOME", os.path.join(settings.PROJECT_DIR,"lib/stanford-parser-2010-08-20"))
     global stanford_parser_home
     stanford_parser_home = os.environ["STANFORD_PARSER_HOME"]
     jpype.startJVM(jpype.getDefaultJVMPath(),
                    "-ea",
                    "-Djava.class.path=%s/stanford-parser.jar" % (stanford_parser_home),)
+
 startJvm() # one jvm per python instance.
 
 class Parser:
@@ -139,7 +142,6 @@ class Parser:
         tokens = self.documentPreprocessor.getWordsFromString(sentence)
         for token in tokens:
             if token.word() in ["down"]:
-                print "setting tag"
                 token.setTag("IN")
                 pass
             if token.word().lower() in ["bot"]:

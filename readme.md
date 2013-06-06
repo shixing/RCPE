@@ -12,6 +12,13 @@ Reason Consequence Pairs Extraction (RCPE)
 * Download Reference Resolver [todo for aihe]
 
 * Get yelp challenge data at http://www.yelp.com/dataset_challenge/ or contact us to get it.
+* download nltk for python
+* download nltk packages: wordnet and maxent_treebank_pos_tagger
+* download numpy package for python
+```
+sudo pip install numpy
+```
+
 
 ### Preprocess
 
@@ -78,6 +85,12 @@ You should first change dir and amount of results you want in evaluate.py
 * users: Store the user information
 * reviews: Store the review text and relavant information. The review_clauses column would store the results of SPADE parser.
 * rc: Store the extracted reason-consequence pairs and the reference resolution results.
+
+### codes where need to modify to fit your environment
+
+* rcpe/settings.py
+
+Change PROJECT_DIR to the path where you put the project folder
 
 ---
 

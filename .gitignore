@@ -5,5 +5,7 @@ db_backup/*
 .DS_Store
 *~
 [#].[#]
-*.pyc
+.[#]*
 *[#]
+temp/*
+*.pyc
