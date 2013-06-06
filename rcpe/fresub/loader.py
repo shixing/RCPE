@@ -7,7 +7,7 @@
 # Author: Xing Shi
 # contact: xingshi@usc.edu
 
-import settings
+from rcpe import settings
 import os
 import json
 from sent import Sent
@@ -204,6 +204,27 @@ class Loader:
         data = cPickle.load(open(Loader.pickleFile,'r'))
         return data
 
+    
+    @staticmethod
+    def sent2pair(data):
+        idx = -1
+        cidx = -1
+        new_data = []
+        temp = []
+        for d in data:
+            cidx = d.id.split('_')[0]
+            if cidx != idx:
+                if len(temp)>0:
+                    new_data.append(tuple(temp))
+                temp = []
+                idx = cidx
+            temp.append(d)
+        if len(temp)>0:
+            new_data.append(tuple(temp))
+        
+        return new_data
+
 
 if __name__ == '__main__':
     Loader.load(True)
+    

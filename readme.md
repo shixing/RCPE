@@ -86,6 +86,12 @@ You should first change dir and amount of results you want in evaluate.py
 * reviews: Store the review text and relavant information. The review_clauses column would store the results of SPADE parser.
 * rc: Store the extracted reason-consequence pairs and the reference resolution results.
 
+### codes where need to modify to fit your environment
+
+* rcpe/settings.py
+
+Change PROJECT_DIR to the path where you put the project folder
+
 ---
 
 **Contact**
