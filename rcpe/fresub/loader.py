@@ -174,7 +174,7 @@ class Loader:
         data = [] # array of Sent
         jf = open(Loader.jsonFile,'r')
         lines = []
-        process_num=4
+        process_num= settings.N_CORES
         for line in jf:
             lines.append(line)
 
