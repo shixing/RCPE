@@ -14,11 +14,13 @@ import re
 from nltk.stem.wordnet import WordNetLemmatizer
 from stanford_parser import parser
 import json
+import os
+from rcpe import settings
 
 
 # parsers
-sp = parser.Parser()
-wnl = WordNetLemmatizer()
+# sp = parser.Parser()
+# wnl = WordNetLemmatizer()
 
 
 def search(array,rel,gov,dep):
@@ -207,7 +209,7 @@ def engine(clauses, query):
     return pairs
 
 
-def processReview(clauses,sp,wnl):
+def processReview(clauses,sp=None,wnl=None):
     pairs = []
 
     temp_pairs = engine(clauses,'C+ R^because_<>. R^and_/p')
@@ -225,32 +227,33 @@ def processReview(clauses,sp,wnl):
                 break
         if ist:
             temp_pairs.append(t)
-
-    for tpair in temp_pairs:
-        treasons = tpair[0]
-        tconsequences = tpair[1]
-        reasons = []
-        consequences = []
-        for treason in treasons:
-            phrase = toPhrase(treason[0],sp,wnl)
-            reasons.append((phrase,treason[1]))
-        for tconsequence in tconsequences:
-            phrase = toPhrase(tconsequence[0],sp,wnl)
-            consequences.append((phrase,tconsequence[1]))
-        pairs.append((reasons,consequences))
-    return temp_pairs,pairs
+            
+    # for tpair in temp_pairs:
+    #     treasons = tpair[0]
+    #     tconsequences = tpair[1]
+    #     reasons = []
+    #     consequences = []
+    #     for treason in treasons:
+    #         phrase = toPhrase(treason[0],sp,wnl)
+    #         reasons.append((phrase,treason[1]))
+    #     for tconsequence in tconsequences:
+    #         phrase = toPhrase(tconsequence[0],sp,wnl)
+    #         consequences.append((phrase,tconsequence[1]))
+    #     pairs.append((reasons,consequences))
+    return temp_pairs
 
 
 def main():
     # file to save
-    jfile = open('result.tuple.json.txt','w')
-    jsfile = open('result.sentence.json.txt','w')
-    file = open('result.txt','w')
-    jhfile = open('result.jh.txt','w')
+    #jfile = open('result.tuple.json.txt','w')
+    file_path = os.path.join(settings.PROJECT_DIR,'result/raw/result.sentence.json.txt')
+    jsfile = open(file_path,'w')
+    #file = open('result.txt','w')
+    #jhfile = open('result.jh.txt','w')
     # db
     CONN_STRING = mydb.get_CONN()
     con = mydb.getCon(CONN_STRING)
-    query = 'select id , review_clauses from review order by id limit 1000'
+    query = 'select id , review_clauses from review where review_clauses is not null order by id'
     rows = mydb.executeQueryResult(con,query,True)
     
     for row in rows:
@@ -260,34 +263,34 @@ def main():
             continue
         review = review.decode('utf-8')
         clauses = review.split('###')
-        tpairs,pairs = processReview(clauses,sp,wnl)
-        if len(pairs) == 0:
+        tpairs = processReview(clauses)
+        if len(tpairs) == 0:
             continue
-        jfile.write(json.dumps({'id':id,'pairs':pairs})+'\n')
+        #jfile.write(json.dumps({'id':id,'pairs':pairs})+'\n')
         jsfile.write(json.dumps({'id':id,'sen_pairs':tpairs})+'\n')
         
-        file.write('id:'+str(id)+'\n')
-        jhfile.write('id:'+str(id)+'\n')
-        for tpair in tpairs:
-            file.write('Reasons:'+repr(tpair[0])+'\n')
-            file.write('Consequences:'+ repr(tpair[1])+'\n')
+        #file.write('id:'+str(id)+'\n')
+        #jhfile.write('id:'+str(id)+'\n')
+        # for tpair in tpairs:
+        #     file.write('Reasons:'+repr(tpair[0])+'\n')
+        #     file.write('Consequences:'+ repr(tpair[1])+'\n')
             
-        for pair in pairs:
-            jhfile.write('Reasons:\n')
-            jhfile.write(repr(pair[0][0][0]['subj'])+' ')
-            jhfile.write(repr(pair[0][0][0]['verb'])+' ')
-            jhfile.write(repr(pair[0][0][0]['dobj'])+' ')
-            jhfile.write(repr(pair[0][0][0]['iobj'])+'\n')
+        # for pair in pairs:
+        #     jhfile.write('Reasons:\n')
+        #     jhfile.write(repr(pair[0][0][0]['subj'])+' ')
+        #     jhfile.write(repr(pair[0][0][0]['verb'])+' ')
+        #     jhfile.write(repr(pair[0][0][0]['dobj'])+' ')
+        #     jhfile.write(repr(pair[0][0][0]['iobj'])+'\n')
             
-            jhfile.write('Consequences:\n')
-            jhfile.write(repr(pair[1][0][0]['subj'])+' ')
-            jhfile.write(repr(pair[1][0][0]['verb'])+' ')
-            jhfile.write(repr(pair[1][0][0]['dobj'])+' ')
-            jhfile.write(repr(pair[1][0][0]['iobj'])+'\n')
-            
-    file.close()
-    jfile.close()
-    jhfile.close()
+        #     jhfile.write('Consequences:\n')
+        #     jhfile.write(repr(pair[1][0][0]['subj'])+' ')
+        #     jhfile.write(repr(pair[1][0][0]['verb'])+' ')
+        #     jhfile.write(repr(pair[1][0][0]['dobj'])+' ')
+        #     jhfile.write(repr(pair[1][0][0]['iobj'])+'\n')
+    jsfile.close()        
+    #file.close()
+    #jfile.close()
+    #jhfile.close()
 
 if __name__ == '__main__':
     main()
