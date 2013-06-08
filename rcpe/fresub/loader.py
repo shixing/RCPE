@@ -211,11 +211,15 @@ class Loader:
         cidx = -1
         new_data = []
         temp = []
+        tuple_set = set()
         for d in data:
             cidx = d.id.split('_')[0]
             if cidx != idx:
                 if len(temp)>0:
-                    new_data.append(tuple(temp))
+                    strkey = '_'.join([dd.raw for dd in temp])
+                    if not strkey in tuple_set:
+                        new_data.append(tuple(temp))
+                        tuple_set.add(strkey)
                 temp = []
                 idx = cidx
             temp.append(d)

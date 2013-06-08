@@ -10,3 +10,4 @@ db_backup/*
 *[#]
 temp/*
 *.pyc
+rcpe/settings.py
