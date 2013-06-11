@@ -169,7 +169,7 @@ def calculate_npmi(dir_path,matrix,rdict,cdict,n):
     
     f = open(os.path.join(dir_path,'pmi.txt'),'w')
     for rs,cs,npmi in pmi_tuple:
-        f.write('\t'.join([rs.encode('utf8'),cs.encode('utf8'),str(npmi),str(matrix[rs][cs])])+'\n')
+        f.write('\t'.join([rs.encode('utf8'),cs.encode('utf8'),str(npmi),str(matrix[rs][cs]),str(rdict[rs]),str(cdict[cs])])+'\n')
     f.close() 
 
 

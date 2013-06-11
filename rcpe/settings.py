@@ -15,3 +15,4 @@ Database_Name = 'yelp'
 PROJECT_DIR = '/Users/xingshi/Workspace/misc/rcpe'
 TEMP_DIR = os.path.join(PROJECT_DIR,'temp')
 N_CORES = 4
+author= 'Xing Shi'

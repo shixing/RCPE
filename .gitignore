@@ -1,3 +1,4 @@
+rcpe/settings.py
 bin/*
 lib/*
 yelp/*
@@ -10,4 +11,4 @@ db_backup/*
 *[#]
 temp/*
 *.pyc
-rcpe/settings.py
+
