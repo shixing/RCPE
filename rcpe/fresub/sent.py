@@ -132,7 +132,7 @@ class Sent:
                     stem = Sent.wnl.lemmatize(token,Sent.POS_MAP[pos_penn])
                 else:
                     stem = token
-                stems.append(stem)
+                stems.append(stem.lower())
             
             self.tokens = tokens
             self.pos = pos

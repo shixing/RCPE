@@ -48,7 +48,7 @@ def main():
 def n_gram_group(dir_path,data,n_gram):
     result_map = {}
     processes = []
-    n_process = 4
+    n_process = settings.N_CORES
     q = Queue()
     for i in xrange(n_process):
         p = Process(target=n_gram_worker, args = (data,n_gram,i,n_process,q))
@@ -96,7 +96,7 @@ def n_gram_worker(data,n_gram,r,b,queue):
 def parse_gram_group(dir_path,data,min_n_gram,max_n_gram):
     result_map = {}
     processes = []
-    n_process = 4
+    n_process = settings.N_CORES
     q = Queue()
     for i in xrange(n_process):
         p = Process(target=parse_gram_worker, args = (data,i,n_process,q,min_n_gram,max_n_gram))
@@ -157,6 +157,8 @@ def calculate_npmi(dir_path,matrix,rdict,cdict,n):
             npmi = npmi_top / npmi_bot - 1.0
             #print matrix[rs][cs],rdict[rs],cdict[cs],npmi_top,npmi_bot
             pmi[rs][cs] = npmi
+            if npmi > 1:
+                print rs,cs,matrix[rs][cs], rdict[rs],cdict[cs]
             pmi_tuple.append( (rs,cs,npmi) )
             
     pmi_tuple=sorted(pmi_tuple, key=operator.itemgetter(2),reverse=True)
@@ -167,7 +169,7 @@ def calculate_npmi(dir_path,matrix,rdict,cdict,n):
     
     f = open(os.path.join(dir_path,'pmi.txt'),'w')
     for rs,cs,npmi in pmi_tuple:
-        f.write('\t'.join([rs,cs,str(npmi),str(matrix[rs][cs])])+'\n')
+        f.write('\t'.join([rs.encode('utf8'),cs.encode('utf8'),str(npmi),str(matrix[rs][cs]),str(rdict[rs]),str(cdict[cs])])+'\n')
     f.close() 
 
 
@@ -177,7 +179,7 @@ def matrix_group(dir_path,data,min_n_gram,max_n_gram):
     rdict = defaultdict(int)
     cdict = defaultdict(int)
     processes = []
-    n_process = 4
+    n_process = settings.N_CORES
     q = Queue()
     for i in xrange(n_process):
         p = Process(target=matrix_worker, args = (data_tuple,i,n_process,q,min_n_gram,max_n_gram))
@@ -190,9 +192,9 @@ def matrix_group(dir_path,data,min_n_gram,max_n_gram):
             for k2 in d[k1]:
                 result_matrix[k1][k2] += d[k1][k2]
         for rk in rd:
-            rdict[rk]+=1
+            rdict[rk]+=rd[rk]
         for ck in cd:
-            cdict[ck]+=1
+            cdict[ck]+=cd[ck]
 
     for p in processes:
         p.join()
@@ -235,10 +237,12 @@ def matrix_worker(data_tuple,r,b,queue,min_n_gram,max_n_gram):
                 elif sent.rc == 'C':
                     csubs.update(substrs)
             for rsub in rsubs:
-                rdict[rsub]+=1
                 for csub in csubs:
-                    cdict[csub]+=1
                     matrix[rsub][csub]+=1
+            for rsub in rsubs:
+                rdict[rsub]+=1
+            for csub in csubs:
+                cdict[csub]+=1
             
     queue.put((matrix,rdict,cdict))
 
