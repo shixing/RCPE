@@ -12,8 +12,10 @@
 	<script type="text/javascript" src="static/search/js/roundabout.js"></script>
   <script type="text/javascript" src="static/search/js/roundabout_shapes.js"></script>
   <script type="text/javascript" src="static/search/js/gallery_init.js"></script>
-  <script type="text/javascript" src="static/search/js/cufon-replace.js"></script> 
+  <script type="text/javascript" src="static/search/js/cufon-replace.js"></script>
   <script type="text/javascript" src="static/search/js/search.js"></script>
+  <script type="text/javascript" src="static/labeling/js/label.js"></script>
+
   <!--[if lt IE 7]>
   	<link rel="stylesheet" href="css/ie/ie6.css" type="text/css" media="all">
   <![endif]-->
@@ -30,46 +32,42 @@
     	<h1><a href="index.html">Know Why</a></h1>
       <nav>
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="search.html"  >Search</a></li>
-	  <li><a href="search_pair.html" class="current">RCPair</a></li>
-          <li><a href="contacts.html">Contact</a></li>
+          <li><a href="label.html"  class="current">Label</a></li>
         </ul>
       </nav>
     </div>
   </header>
-  <!-- #search bar -->
+  
   <div class="main-box">
     
     <div class="container" id="search_bar">
       <div class="search_inside">
-	<dibv class="search_title" style="left:300px">
-	  Dive into People's <span style="font-weight:200;">Brain</span> 
+	<div class="search_title">
+	  <span style="font-weight:200;">Label</span> RC Pairs
 	</div>
-	<div class="wrapper" style="position: absolute;left: 50px;">
-	  <label class = "search_prefix">REASON</label>
-	  <input class = "search_input" type="text" id="query_reason" value="loud"/>
-	  <label class = "search_prefix">CONSEQUENCE</label>
-	  <input class = "search_input" type="text" id="query_consequence" value="star"/>
-	  <input type='button' value='Search' class="search_button" onclick="searchRCPair()"/>
+	<div class="wrapper" style="position: absolute;left: 150px;width:90%">
+	  <label class = "search_prefix">User Name</label>
+	  <input class = "search_input" type="text" id="user_name"/>
+	  <input type='button' value='start' class="search_button" onclick="start_label()"/>
+	  <input type='button' value='Change User' class="search_button" onclick="change_user_func()" style="display:none" id="change_user"/>
 	</div>
       </div>
       
     </div>
     <!--# show results -->
     <div class = "scrollable">
-      <div class = "pair_results_container">
-      <div id = "results_container">
+      <div class = "inside">
+      <div class = "container" id = "results_container">
+	
 
-      </div>
+	
       </div>
       </div>
     </div>
     <!--/# show results -->
   </div>
   <!-- /#search bar -->
-  
-  <!-- footer -->
+
   <footer>
     <div class="container">
     	<div class="wrapper">
@@ -81,6 +79,15 @@
       </div>
     </div>
   </footer>
+  <div id = "shadow" style="display:none;">
+    <div id = "pairs_wrapper">
+      <img id = "close_icon" src ="static/search/images/close-icon.png" height = "20px" onclick="loadingOff()"/>
+    <div id = "pairs_window">
+
+
+    </div>
+    <div>
+  </div>
   <script type="text/javascript"> Cufon.now(); </script>
 </body>
 </html>

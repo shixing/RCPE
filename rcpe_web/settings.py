@@ -99,12 +99,14 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'tracking.middleware.VisitorTrackingMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
 )
 
 ROOT_URLCONF = 'rcpe_web.urls'
 
 TEMPLATE_DIRS = (
 	'search/templates',
+        'labeling/templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -120,6 +122,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'rcpe_web.search',
     'rcpe_web.tracking',
+    'rcpe_web.labeling',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -148,3 +151,5 @@ LOGGING = {
         },
     }
 }
+
+SESSION_COOKIE_DOMAIN = 'kunene.usc.edu:8000'

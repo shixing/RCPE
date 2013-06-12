@@ -814,3 +814,18 @@ float:left;
 position:relative;
 top:10px;
 }
+
+.label_title{
+font-size: 25px;
+font-family: Helvetica Neue;
+font-weight:100;
+margin-top:10px;
+}
+
+.sent_wrapper{
+font-size: 18px;
+font-family: Helvetica Neue;
+font-weight:200;
+margin-top:10px;
+margin-bottom:10px;
+}

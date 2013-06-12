@@ -92,6 +92,9 @@ You should first change dir and amount of results you want in evaluate.py
 
 Change PROJECT_DIR to the path where you put the project folder
 
+* rcpe_web/settings.py
+
+Change Database settings
 ---
 
 **Contact**
