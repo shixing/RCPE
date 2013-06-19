@@ -11,10 +11,7 @@ from django.db import models
 
 class Review(models.Model):
     id = models.IntegerField(primary_key=True)
-    business_id = models.CharField(max_length=50)
-    user_id = models.CharField(max_length=50)
     review_text = models.TextField()
-    review_date = models.DateField()
     review_clauses = models.TextField()
 
     class Meta:
@@ -41,8 +38,6 @@ class Business(models.Model):
 class Rc(models.Model):
     review = models.ForeignKey(Review,db_column = 'id')
     pairs = models.TextField()
-    tuples = models.TextField()
-    coref = models.TextField()
     class Meta:
         db_table = u'rc'
 

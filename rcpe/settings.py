@@ -10,7 +10,7 @@ import os
 
 Database_User = 'wiki' # This should reflects your database username
 Database_Password = 'wiki'
-Database_Name = 'yelp'
+Database_Name = 'yammer'
 
 PROJECT_DIR = '/Users/xingshi/Workspace/misc/rcpe'
 TEMP_DIR = os.path.join(PROJECT_DIR,'temp')

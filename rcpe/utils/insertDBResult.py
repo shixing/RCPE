@@ -81,25 +81,27 @@ def main():
 
     CONN_STRING = mydb.get_CONN()
     con = mydb.getCon(CONN_STRING)
-    dir_path = os.path.join(settings.PROJECT_DIR,'result/raw/')
+    dir_path = os.path.join(settings.PROJECT_DIR,'result/yammer/')
 
     if insertResult:
 
         # create db
         querys = []
         querys.append('drop table if exists rc;')
-        querys.append('create table rc(id int,pairs text, tuples text, coref text);')
+        querys.append('create table rc(id int,pairs text);')
         mydb.executeManyQuery(con,querys,False)
 
-        # insert pairs
+        # # insert pairs
         query =  'insert into rc(id,pairs) values(%s, %s)'
-        insert(con,os.path,join(dir_path,'result.sentence.json.txt'),query,'sen_pairs',False)
-        # insert tuples
-        query = 'update rc set tuples = %s where id = %s'
-        insert(con,os.path.join(dir_path,'result.tuple.json.txt'),query,'pairs',True)
-        # insert coref
-        query = 'update rc set coref = %s where id = %s'
-        insert(con,os.path.join(dir_path,'result.coref.json.txt'),query,'coref',True)
+        insert(con,os.path.join(dir_path,'result.sentence.json.txt'),query,'sen_pairs',False)
+
+        # # insert tuples
+        # query = 'update rc set tuples = %s where id = %s'
+        # insert(con,os.path.join(dir_path,'result.tuple.json.txt'),query,'pairs',True)
+        # # insert coref
+        # query = 'update rc set coref = %s where id = %s'
+        # insert(con,os.path.join(dir_path,'result.coref.json.txt'),query,'coref',True)
+    
     if insertToken:
         querys = []
         querys.append('drop table if exists tokenizedrc;')

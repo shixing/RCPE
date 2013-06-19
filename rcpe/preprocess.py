@@ -3,9 +3,10 @@
 
 # preprocess.py
 # Insert json file into database:
-#   review.json.txt: python preprocess.py -u xingshi -i -f ./yelp/yelp_review.json
+#   review.json.txt: python preprocess.py -i -f ./yelp/yelp_review.json # insert from json
+#   
 # Do the Discourse Segmenting
-#   python preprocess.py -u xingshi -s 0 -e 1000 -f sent.txt -d ../../dp/SPADE/bin
+#   python preprocess.py -s 0 -e 1000 -f sent.txt -d ../../dp/SPADE/bin
 #
 # Author: Ai He & Xing Shi
 # contact: aihe@usc.edu xingshi@usc.edu
@@ -31,23 +32,32 @@ def clearTables(CONN_STRING):
     queries.append('delete from business')
     mydb.executeManyQuery(con, queries, True)
 
-def dropTables(CONN_STRING):
+def dropTables(CONN_STRING,text):
     con = mydb.getCon(CONN_STRING)
     queries = list()
-    queries.append('drop table if exists review')
-    queries.append('drop table if exists users')
-    queries.append('drop table if exists business')
-    mydb.executeManyQuery(con, queries, True)
+    if not text:
+        queries.append('drop table if exists review')
+        queries.append('drop table if exists users')
+        queries.append('drop table if exists business')
+        mydb.executeManyQuery(con, queries, True)
+    else:
+        queries.append('drop table if exists review')
+        mydb.executeManyQuery(con, queries, True)
 
-def createTables(CONN_STRING):
+
+def createTables(CONN_STRING,text):
     con = mydb.getCon(CONN_STRING)
     queries = list()
-    queries.append('create table users(user_id varchar(50), name varchar(100), review_count int, primary key(user_id))')
-    queries.append('create table business(business_id varchar(50), name varchar(100), full_address varchar(100), city varchar(20), state varchar(20), review_count int, categories varchar(20), primary key(business_id))')
-    queries.append('create table review(id int, business_id varchar(50), user_id varchar(50), review_text text, review_date date, review_clauses text, primary key(id))')
-    mydb.executeManyQuery(con, queries, True)
+    if not text:
+        queries.append('create table users(user_id varchar(50), name varchar(100), review_count int, primary key(user_id))')
+        queries.append('create table business(business_id varchar(50), name varchar(100), full_address varchar(100), city varchar(20), state varchar(20), review_count int, categories varchar(20), primary key(business_id))')
+        queries.append('create table review(id int, business_id varchar(50), user_id varchar(50), review_text text, review_date date, review_clauses text, primary key(id))')
+        mydb.executeManyQuery(con, queries, True)
+    else:
+        queries.append('create table review(id int, review_text text, review_clauses text, primary key(id))')
+        mydb.executeManyQuery(con, queries, True)
 
-def insertReviews(fileName):
+def insertReviews(fileName,text):
     con = mydb.getCon(CONN_STRING)
     json_date = open(fileName,'r')
    # date = json.load(json_date)
@@ -56,18 +66,21 @@ def insertReviews(fileName):
     succ = 0
     for entry in json_date:
         total += 1
-        #print entry
-        data = json.loads(entry)
-        #print date['business_id']
-        succ += 1
-        query = "insert into review(id, business_id, user_id, review_text, review_date) values('"
-        query += str(succ) + "', '"
-        query += data['business_id'] + "', '"
-        query += data['user_id'] + "', '"
-        query += data['text'].replace("'","''") +  "', '"
-        query += data['date'].replace("'","''") +  "')"
-        #query += data['votes'] +  "')"
-        
+        if not text:
+            data = json.loads(entry)
+            succ += 1
+            query = "insert into review(id, business_id, user_id, review_text, review_date) values('"
+            query += str(succ) + "', '"
+            query += data['business_id'] + "', '"
+            query += data['user_id'] + "', '"
+            query += data['text'].replace("'","''") +  "', '"
+            query += data['date'].replace("'","''") +  "')"
+        else:
+            succ += 1
+            query = "insert into review(id,review_text) values('"
+            query += str(succ) + "', '"
+            query += entry.replace("'","''") +  "')"
+
         try:
             mydb.executeQuery(con,query, False)
         except psycopg2.DatabaseError, e:
@@ -229,19 +242,24 @@ if __name__ == '__main__':
     parser.add_option("-i","--insert",dest ='insert',action ='store_true', help="insert reviews", default = False)
     parser.add_option("-s","--start", dest='start',help="start id")
     parser.add_option("-e","--end", dest='end',help="end id")
-    parser.add_option("-f","--file", dest='file',help="file name")
+    parser.add_option("-f","--file", dest='file',help="file name: when insert records, this indicates the source file; when process data, this indicate the temp file path")
     parser.add_option("-d","--dir",dest='dir',help="spade.pl dir")
+    parser.add_option("-t","--text",dest='text',action="store_true", default = False , help="input file is txt file ?")
     (options,args) = parser.parse_args()
     insert = options.insert
+    text = options.text
     
     CONN_STRING = mydb.get_CONN()
     p = re.compile('^\\W+$')
+
+    print CONN_STRING
+    
     
     if insert:
         fileName = options.file
-        dropTables(CONN_STRING)
-        createTables(CONN_STRING)
-        insertReviews(fileName)
+        dropTables(CONN_STRING,text)
+        createTables(CONN_STRING,text)
+        insertReviews(fileName,text)
     else:
         start = int(options.start)
         end = int(options.end)

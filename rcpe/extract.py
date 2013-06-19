@@ -246,7 +246,7 @@ def processReview(clauses,sp=None,wnl=None):
 def main():
     # file to save
     #jfile = open('result.tuple.json.txt','w')
-    file_path = os.path.join(settings.PROJECT_DIR,'result/raw/result.sentence.json.txt')
+    file_path = os.path.join(settings.PROJECT_DIR,'result/yammer/result.sentence.json.txt')
     jsfile = open(file_path,'w')
     #file = open('result.txt','w')
     #jhfile = open('result.jh.txt','w')

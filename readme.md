@@ -95,6 +95,11 @@ Change PROJECT_DIR to the path where you put the project folder
 * rcpe_web/settings.py
 
 Change Database settings
+
+* lib/dp/SPADE/bin/spade.pl
+
+Change $CHP to the path where you put CharniakParser
+
 ---
 
 **Contact**

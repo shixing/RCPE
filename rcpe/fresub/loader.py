@@ -207,6 +207,11 @@ class Loader:
     
     @staticmethod
     def sent2pair(data):
+        '''
+        convert from sent to RC pair, meanwhile remove the duplicate ones
+        result format:
+        [ (Sent,Sent,Sent),(Sent,Sent) ]
+        '''
         idx = -1
         cidx = -1
         new_data = []
